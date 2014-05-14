@@ -8,14 +8,14 @@ var height = canvas.height;
 
 var boidWidth = 10;
 var boidHeight = 10;
-var numBoids = 20;
+var numBoids = 200;
 var boidSpeed = 3;
-var distanceKeepAway = 50;
-var keepAwayRotation = 0.03;
-
-// higher value = less important
-var moveToOthersImportance = 128;
-var turnLikeOthersImportance = 128;
+var distanceKeepAway = 100;
+var keepAwayRotation = 0.01;
+var wallTurnAmount = .01;
+var wallTurnDistance = 100;
+var moveToOthersImportance = 0.01;
+var turnLikeOthersImportance = 0.01;
 
 var PI = 3.1415;
 
@@ -57,21 +57,21 @@ function averageY(boids) {
 
 function turnLikeOthers(boid, boids) {
     var avg = averageRotation(boids);
-    boid.rotation += (avg - boid.rotation) / turnLikeOthersImportance;
+    boid.rotation += (avg - boid.rotation) * turnLikeOthersImportance;
 }
 
 function moveToOthers(boid, boids) {
     var avgX = averageX(boids);
     var avgY = averageY(boids);
-    var difX = boid.x - avgX;
-    var difY = boid.y - avgY;
+    var difX = avgX - boid.x;
+    var difY = avgY - boid.y;
     var rotation = Math.atan(difY / difX);
     if (difY < 0 && difX < 0) {
         rotation += PI;
-    } else if(difX < 0 && difY > 0) {
+    } else if (difX < 0 && difY > 0) {
         rotation += PI;
     }
-    boid.rotation += ((rotation - boid.rotation) / moveToOthersImportance);
+    boid.rotation += ((rotation - boid.rotation) * moveToOthersImportance);
 }
 
 function keepFromOthers(boid, boids) {
@@ -79,27 +79,65 @@ function keepFromOthers(boid, boids) {
         otherBoid = boids[i];
         if (otherBoid != boid) {
             if (Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2)) < distanceKeepAway) {
-                if (Math.random() > 0.5) {
-                    boid.rotation += keepAwayRotation;
-                } else {
-                    boid.rotation -= keepAwayRotation;
-                }
+                boid.rotation += (Math.random()) / 100;
             }
         }
     }
 }
 
+function moveAwayFromWall(boid) {
+    var leftOrRight = Math.random();
+    if (leftOrRight < .5) {
+        wallTurnAmount *= -1;
+    }
+    // Check if almost right wall
+    if (Math.abs(boid.x - width) < wallTurnDistance) {
+        if (boid.rotation > 0 && boid.rotation < PI / 2) {
+            boid.rotation += wallTurnAmount;
+        } else {
+            boid.rotation -= wallTurnAmount;
+        }
+    }
+    // Check if almost left wall
+    if (boid.x < wallTurnDistance) {
+        if (boid.rotation > PI/2 && boid.rotation < PI) {
+            boid.rotation -= wallTurnAmount;
+        } else {
+            boid.rotation += wallTurnAmount;
+        }
+    }
+    // Check if almost top wall
+    if (boid.y < wallTurnDistance) {
+        if (boid.rotation > 0 && boid.rotation < PI / 2) {
+            boid.rotation += wallTurnAmount;
+        } else {
+            boid.rotation -= wallTurnAmount;
+        }
+    }
+    // Check if almost bottom wall
+    if (Math.abs(boid.y - height) < wallTurnDistance) {
+        if (boid.rotation < 0 && boid.rotation > -PI / 2) {
+            boid.rotation += wallTurnAmount;
+        } else {
+            boid.rotation -= wallTurnAmount;
+        }
+    }
+}
+
 function moveBoids() {
+    // create a copy so the moving boids don't mess stuff up
+    var copyBoids = allBoids.slice(0);
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
-        turnLikeOthers(boid, allBoids);
-        moveToOthers(boid, allBoids);
-        keepFromOthers(boid, allBoids);
+        turnLikeOthers(boid, copyBoids);
+        moveToOthers(boid, copyBoids);
+        keepFromOthers(boid, copyBoids);
+       // moveAwayFromWall(boid);
         var yMove = Math.sin(boid.rotation) * boid.speed;
         var xMove = Math.cos(boid.rotation) * boid.speed;
         boid.x += xMove;
         boid.y += yMove;
-        if (boid.x > canvas.width) {
+       if (boid.x > canvas.width) {
             boid.x = -5;
         }
         if (boid.x < -5) {
@@ -115,11 +153,12 @@ function moveBoids() {
 }
 
 function drawBoids() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000000";
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
-        ctx.fillRect(boid.x - (boidWidth / 2), boid.y - (boidHeight / 2), boidWidth, boidHeight);
+        ctx.fillRect(boid.x - (boidWidth / 2), boid.y - (boidHeight / 2), 10, 10);
     }
 
 }
