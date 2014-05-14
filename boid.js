@@ -26,6 +26,8 @@ function initializeBoids() {
         boid.y = Math.random() * height;
         boid.rotation = Math.random() * 2 * PI;
         boid.speed = boidSpeed;
+        boid.r = 128;
+        boid.g = 128;
         allBoids.push(boid);
     }
 }
@@ -74,14 +76,31 @@ function moveToOthers(boid, boids) {
 }
 
 function keepFromOthers(boid, boids) {
+    // to find shortest distance for color purposes
+    var shortestDistance = 100000;
     for (var i = 0; i < boids.length; i++) {
         otherBoid = boids[i];
         if (otherBoid != boid) {
-            if (Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2)) < distanceKeepAway) {
+            var dist = Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2));
+            if (dist < distanceKeepAway) {
+                if(dist < shortestDistance) {
+                    shortestDistance = dist;
+                }
                 boid.rotation += (Math.random()) * keepAwayRotation;
             }
         }
     }
+
+    
+    // Define what distance is considered 'green'
+    var distanceGreen = 50;
+
+    // Scale shortest distance to rgb value, sqrt for quadratic scaling
+    var scale = ((shortestDistance / distanceGreen)) * 256;
+    // Closer = higher r (more red)
+    boid.r = Math.round(256 - scale);
+    // Further = lower g (more green)
+    boid.g = Math.round(scale);
 }
 
 function moveBoids() {
@@ -118,7 +137,10 @@ function drawBoids() {
         boid = allBoids[i];
         ctx.beginPath();
         ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2*PI);
-        ctx.fillStyle = 'black';
+        var r = boid.r;
+        var g = boid.g;
+        var colorString = 'rgb(' + r + ',' + g + ',0)';
+        ctx.fillStyle = colorString;
         ctx.fill();
         ctx.stroke();
     }
