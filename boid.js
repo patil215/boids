@@ -136,11 +136,12 @@ function drawBoids() {
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
         ctx.beginPath();
-        ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2*PI);
         var r = boid.r;
         var g = boid.g;
         var colorString = 'rgb(' + r + ',' + g + ',0)';
         ctx.fillStyle = colorString;
+        ctx.strokeStyle = colorString;
+        ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2*PI);
         ctx.fill();
         ctx.stroke();
     }
