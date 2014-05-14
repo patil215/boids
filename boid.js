@@ -6,13 +6,27 @@ var allBoids = [];
 var width = canvas.width;
 var height = canvas.height;
 
+var boidWidth = 10;
+var boidHeight = 10;
+var numBoids = 20;
+var boidSpeed = 3;
+var distanceKeepAway = 50;
+var keepAwayRotation = 0.03;
+
+// higher value = less important
+var moveToOthersImportance = 16;
+var turnLikeOthersImportance = 16;
+
+var PI = 3.1415;
+
+
 function initializeBoids() {
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < numBoids; i++) {
         var boid = new Object();
-        boid.x = Math.random() * 400;
-        boid.y = Math.random() * 400;
-        boid.rotation = Math.random() * 2 * 3.1415;
-        boid.speed = 3;
+        boid.x = Math.random() * width;
+        boid.y = Math.random() * height;
+        boid.rotation = Math.random() * 2 * PI;
+        boid.speed = boidSpeed;
         allBoids.push(boid);
     }
 }
@@ -43,7 +57,7 @@ function averageY(boids) {
 
 function turnLikeOthers(boid, boids) {
     var avg = averageRotation(boids);
-    boid.rotation += (avg - boid.rotation) / 16;
+    boid.rotation += (avg - boid.rotation) / turnLikeOthersImportance;
 }
 
 function moveToOthers(boid, boids) {
@@ -53,20 +67,20 @@ function moveToOthers(boid, boids) {
     var difY = boid.y - avgY;
     var rotation = Math.atan(difY / difX);
     if (difY < 0 || difX < 0) {
-        rotation += 3.1415;
+        rotation += PI;
     }
-    boid.rotation += ((rotation - boid.rotation) / 16);
+    boid.rotation += ((rotation - boid.rotation) / moveToOthersImportance);
 }
 
 function keepFromOthers(boid, boids) {
     for (var i = 0; i < boids.length; i++) {
         otherBoid = boids[i];
         if (otherBoid != boid) {
-            if (Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2)) < 50) {
+            if (Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2)) < distanceKeepAway) {
                 if (Math.random() > 0.5) {
-                    boid.rotation += 0.03;
+                    boid.rotation += keepAwayRotation;
                 } else {
-                    boid.rotation -= 0.03;
+                    boid.rotation -= keepAwayRotation;
                 }
             }
         }
@@ -103,7 +117,7 @@ function drawBoids() {
     ctx.fillStyle = "#000000";
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
-        ctx.fillRect(boid.x, boid.y, 10, 10);
+        ctx.fillRect(boid.x - (boidWidth / 2), boid.y - (boidHeight / 2), boidWidth, boidHeight);
     }
 
 }
