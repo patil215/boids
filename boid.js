@@ -6,12 +6,11 @@ var allBoids = [];
 var width = canvas.width;
 var height = canvas.height;
 
-var boidWidth = 10;
-var boidHeight = 10;
+var keepAwayRotation = 0.01;
+var boidSize = 5;
 var numBoids = 200;
 var boidSpeed = 3;
 var distanceKeepAway = 100;
-var keepAwayRotation = 0.01;
 var wallTurnAmount = .01;
 var wallTurnDistance = 100;
 var moveToOthersImportance = 0.01;
@@ -79,7 +78,7 @@ function keepFromOthers(boid, boids) {
         otherBoid = boids[i];
         if (otherBoid != boid) {
             if (Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2)) < distanceKeepAway) {
-                boid.rotation += (Math.random()) / 100;
+                boid.rotation += (Math.random()) * keepAwayRotation;
             }
         }
     }
@@ -153,12 +152,14 @@ function moveBoids() {
 }
 
 function drawBoids() {
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "rgba(256,256,256,.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000000";
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
-        ctx.fillRect(boid.x - (boidWidth / 2), boid.y - (boidHeight / 2), 10, 10);
+        ctx.beginPath();
+        ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2*PI);
+        ctx.stroke();
     }
 
 }
