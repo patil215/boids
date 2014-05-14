@@ -84,45 +84,6 @@ function keepFromOthers(boid, boids) {
     }
 }
 
-function moveAwayFromWall(boid) {
-    var leftOrRight = Math.random();
-    if (leftOrRight < .5) {
-        wallTurnAmount *= -1;
-    }
-    // Check if almost right wall
-    if (Math.abs(boid.x - width) < wallTurnDistance) {
-        if (boid.rotation > 0 && boid.rotation < PI / 2) {
-            boid.rotation += wallTurnAmount;
-        } else {
-            boid.rotation -= wallTurnAmount;
-        }
-    }
-    // Check if almost left wall
-    if (boid.x < wallTurnDistance) {
-        if (boid.rotation > PI/2 && boid.rotation < PI) {
-            boid.rotation -= wallTurnAmount;
-        } else {
-            boid.rotation += wallTurnAmount;
-        }
-    }
-    // Check if almost top wall
-    if (boid.y < wallTurnDistance) {
-        if (boid.rotation > 0 && boid.rotation < PI / 2) {
-            boid.rotation += wallTurnAmount;
-        } else {
-            boid.rotation -= wallTurnAmount;
-        }
-    }
-    // Check if almost bottom wall
-    if (Math.abs(boid.y - height) < wallTurnDistance) {
-        if (boid.rotation < 0 && boid.rotation > -PI / 2) {
-            boid.rotation += wallTurnAmount;
-        } else {
-            boid.rotation -= wallTurnAmount;
-        }
-    }
-}
-
 function moveBoids() {
     // create a copy so the moving boids don't mess stuff up
     var copyBoids = allBoids.slice(0);
@@ -131,7 +92,6 @@ function moveBoids() {
         turnLikeOthers(boid, copyBoids);
         moveToOthers(boid, copyBoids);
         keepFromOthers(boid, copyBoids);
-       // moveAwayFromWall(boid);
         var yMove = Math.sin(boid.rotation) * boid.speed;
         var xMove = Math.cos(boid.rotation) * boid.speed;
         boid.x += xMove;
@@ -154,11 +114,12 @@ function moveBoids() {
 function drawBoids() {
     ctx.fillStyle = "rgba(256,256,256,.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#000000";
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
         ctx.beginPath();
         ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2*PI);
+        ctx.fillStyle = 'black';
+        ctx.fill();
         ctx.stroke();
     }
 
