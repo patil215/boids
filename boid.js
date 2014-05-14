@@ -14,8 +14,8 @@ var distanceKeepAway = 50;
 var keepAwayRotation = 0.03;
 
 // higher value = less important
-var moveToOthersImportance = 16;
-var turnLikeOthersImportance = 16;
+var moveToOthersImportance = 128;
+var turnLikeOthersImportance = 128;
 
 var PI = 3.1415;
 
@@ -66,7 +66,9 @@ function moveToOthers(boid, boids) {
     var difX = boid.x - avgX;
     var difY = boid.y - avgY;
     var rotation = Math.atan(difY / difX);
-    if (difY < 0 || difX < 0) {
+    if (difY < 0 && difX < 0) {
+        rotation += PI;
+    } else if(difX < 0 && difY > 0) {
         rotation += PI;
     }
     boid.rotation += ((rotation - boid.rotation) / moveToOthersImportance);
@@ -98,15 +100,15 @@ function moveBoids() {
         boid.x += xMove;
         boid.y += yMove;
         if (boid.x > canvas.width) {
-            boid.x = -10;
+            boid.x = -5;
         }
-        if (boid.x < -10) {
+        if (boid.x < -5) {
             boid.x = canvas.width;
         }
         if (boid.y > canvas.height) {
-            boid.y = -10;
+            boid.y = -5;
         }
-        if (boid.y < -10) {
+        if (boid.y < -5) {
             boid.y = canvas.height;
         }
     }
