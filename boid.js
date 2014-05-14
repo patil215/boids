@@ -3,6 +3,9 @@ var ctx = canvas.getContext("2d");
 
 var allBoids = [];
 
+var width = canvas.width;
+var height = canvas.height;
+
 function initializeBoids() {
     for (var i = 0; i < 20; i++) {
         var boid = new Object();
@@ -40,7 +43,7 @@ function averageY(boids) {
 
 function turnLikeOthers(boid, boids) {
     var avg = averageRotation(boids);
-    boid.rotation += (avg - boid.rotation) / 8;
+    boid.rotation += (avg - boid.rotation) / 16;
 }
 
 function moveToOthers(boid, boids) {
@@ -80,23 +83,23 @@ function moveBoids() {
         var xMove = Math.cos(boid.rotation) * boid.speed;
         boid.x += xMove;
         boid.y += yMove;
-        if (boid.x > 400) {
+        if (boid.x > canvas.width) {
             boid.x = -10;
         }
         if (boid.x < -10) {
-            boid.x = 400;
+            boid.x = canvas.width;
         }
-        if (boid.y > 400) {
+        if (boid.y > canvas.height) {
             boid.y = -10;
         }
         if (boid.y < -10) {
-            boid.y = 400;
+            boid.y = canvas.height;
         }
     }
 }
 
 function drawBoids() {
-    ctx.clearRect(0, 0, 400, 400);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000000";
     for (var i = 0; i < allBoids.length; i++) {
         boid = allBoids[i];
