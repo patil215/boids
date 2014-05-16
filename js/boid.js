@@ -147,9 +147,21 @@ function isNumber(n) {
 $("#controls-submit").click(function() {
     var newNumBoids = $("#numboids-control").val();
     var newBoidSize = $("#boidsize-control").val();
-    if (isNumber(newNumBoids) && isNumber(newBoidSize)) {
+    var newBoidSpeed = $("#boidspeed-control").val();
+    var newDistanceKeepAway = $("#otherboiddist-control").val();
+    var newKeepAwayRotation = $("#otherboidturn-control").val();
+    var newTurnLikeOthersImportance = $("#sameboidturn-control").val();
+    var newMoveToOthersImportance = $("#boidcentermass-control").val();
+    
+    if (isNumber(newNumBoids) && isNumber(newBoidSize) && isNumber(newBoidSpeed) && isNumber(newDistanceKeepAway) && isNumber(newKeepAwayRotation) &&
+        isNumber(newTurnLikeOthersImportance) && isNumber(newMoveToOthersImportance)) {
         numBoids = newNumBoids;
         boidSize = newBoidSize;
+        boidSpeed = newBoidSpeed;
+        distanceKeepAway = newDistanceKeepAway;
+        keepAwayRotation = newKeepAwayRotation;
+        turnLikeOthersImportance = newTurnLikeOthersImportance;
+        moveToOthersImportance = newMoveToOthersImportance;
         allBoids = [];
         initializeBoids();
     } else {
@@ -160,6 +172,12 @@ $(document).ready(function() {
     console.log("ready");
     $("#numboids-control").val(numBoids);
     $("#boidsize-control").val(boidSize);
+   $("#boidspeed-control").val(boidSpeed);
+    $("#otherboiddist-control").val(distanceKeepAway);
+    $("#otherboidturn-control").val(keepAwayRotation);
+    $("#sameboidturn-control").val(turnLikeOthersImportance);
+    $("#boidcentermass-control").val(moveToOthersImportance);
+     
 });
 
 function main() {
