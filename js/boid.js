@@ -1,11 +1,8 @@
 var canvas = document.getElementById("boid-canvas");
 var ctx = canvas.getContext("2d");
-
 var allBoids = [];
-
 var width = canvas.width;
 var height = canvas.height;
-
 var keepAwayRotation = 0.01;
 var boidSize = 5;
 var numBoids = 100;
@@ -15,10 +12,7 @@ var wallTurnAmount = .01;
 var wallTurnDistance = 100;
 var moveToOthersImportance = 0.008;
 var turnLikeOthersImportance = 0.008;
-
 var PI = 3.1415;
-
-
 
 function initializeBoids() {
     for (var i = 0; i < numBoids; i++) {
@@ -84,7 +78,7 @@ function keepFromOthers(boid, boids) {
         if (otherBoid != boid) {
             var dist = Math.sqrt(Math.pow(boid.x - otherBoid.x, 2) + Math.pow(boid.y - otherBoid.y, 2));
             if (dist < distanceKeepAway) {
-                if(dist < shortestDistance) {
+                if (dist < shortestDistance) {
                     shortestDistance = dist;
                 }
                 boid.rotation += (Math.random()) * keepAwayRotation;
@@ -92,10 +86,8 @@ function keepFromOthers(boid, boids) {
         }
     }
 
-    
     // Define what distance is considered 'green'
     var distanceGreen = 50;
-
     // Scale shortest distance to rgb value, sqrt for quadratic scaling
     var scale = ((shortestDistance / distanceGreen)) * 256;
     // Closer = higher r (more red)
@@ -116,7 +108,7 @@ function moveBoids() {
         var xMove = Math.cos(boid.rotation) * boid.speed;
         boid.x += xMove;
         boid.y += yMove;
-       if (boid.x > canvas.width) {
+        if (boid.x > canvas.width) {
             boid.x = -5;
         }
         if (boid.x < -5) {
@@ -132,7 +124,6 @@ function moveBoids() {
 }
 
 function drawBoids() {
-
     ctx.fillStyle = "rgba(256,256,256,.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     for (var i = 0; i < allBoids.length; i++) {
@@ -143,18 +134,29 @@ function drawBoids() {
         var colorString = 'rgb(' + r + ',' + g + ',0)';
         ctx.fillStyle = colorString;
         ctx.strokeStyle = colorString;
-        ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2*PI);
+        ctx.arc(boid.x - (boidSize / 2), boid.y - (boidSize / 2), boidSize, 0, 2 * PI);
         ctx.fill();
         ctx.stroke();
     }
-
 }
-
-$
-
 initializeBoids();
 
-$(document).ready(function(){
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+$("#controls-submit").click(function() {
+    var newNumBoids = $("#numboids-control").val();
+    var newBoidSize = $("#boidsize-control").val();
+    if (isNumber(newNumBoids) && isNumber(newBoidSize)) {
+        numBoids = newNumBoids;
+        boidSize = newBoidSize;
+        allBoids = [];
+        initializeBoids();
+    } else {
+        alert("Please enter numeric values.");
+    }
+});
+$(document).ready(function() {
     console.log("ready");
     $("#numboids-control").val(numBoids);
     $("#boidsize-control").val(boidSize);
@@ -165,6 +167,4 @@ function main() {
     drawBoids();
     requestAnimationFrame(main);
 };
-
 requestAnimationFrame(main);
-

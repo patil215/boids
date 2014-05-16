@@ -25,6 +25,14 @@
   min-height: 100%;
 }
 
+.textbox-control {
+	border-radius:3px;
+}
+
+.btn {
+	margin:12px;
+}
+
 .credit {
 	text-align: center;
 }
