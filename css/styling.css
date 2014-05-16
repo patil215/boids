@@ -5,7 +5,7 @@
 }
 
 .boid-title {
-	font-size:48px;
+	font-size:32px;
 }
 
 .boid-canvas-container {
@@ -13,7 +13,7 @@
 }
 
 .boid-info-container {
-	text-align:center;
+	padding-left:32px;
 }
 
 .site-wrapper {
@@ -21,4 +21,12 @@
   width: 100%;
   height: 100%; /* For at least Firefox */
   min-height: 100%;
+}
+
+.credit {
+	text-align: center;
+}
+
+.inner {
+	padding:30px;
 }

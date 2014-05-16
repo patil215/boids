@@ -131,6 +131,7 @@ function moveBoids() {
 }
 
 function drawBoids() {
+
     ctx.fillStyle = "rgba(256,256,256,.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     for (var i = 0; i < allBoids.length; i++) {
