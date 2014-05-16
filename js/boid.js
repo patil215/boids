@@ -8,7 +8,7 @@ var height = canvas.height;
 
 var keepAwayRotation = 0.01;
 var boidSize = 5;
-var numBoids = 50;
+var numBoids = 100;
 var boidSpeed = 4;
 var distanceKeepAway = 100;
 var wallTurnAmount = .01;
