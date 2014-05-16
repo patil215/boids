@@ -1,4 +1,4 @@
-var canvas = document.getElementById("boidCanvas");
+var canvas = document.getElementById("boid-canvas");
 var ctx = canvas.getContext("2d");
 
 var allBoids = [];
@@ -9,7 +9,7 @@ var height = canvas.height;
 var keepAwayRotation = 0.01;
 var boidSize = 5;
 var numBoids = 50;
-var boidSpeed = 5;
+var boidSpeed = 4;
 var distanceKeepAway = 100;
 var wallTurnAmount = .01;
 var wallTurnDistance = 100;
