@@ -7,6 +7,7 @@
     <title>A simple boid simulation</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" type="text/css" >
+    <link rel="stylesheet" href="css/slider.css" media="screen" type="text/css">
       <link rel="stylesheet" href="css/styling.css" media="screen" type="text/css" >
       </head>
       <body>
@@ -43,15 +44,26 @@
             <div class="boid-canvas-container">
               <canvas id="boid-canvas" width="800" height = "600" style="border:1px solid #000000;"></canvas>
             </div>
+            <div class="controls-container">
+              <h2>Controls</h2>
+              <div class="control-container">
+                <h5>Number of boids</h5>
+                <input class="textbox-control" id="numboids-control">
+              </div>
+              <div class="control-container">
+                <h5>Boid size</h5>
+                <input class="textbox-control" id="boidsize-control">
+              </div>
+            </div>
             <div class="boid-info-container">
               <h3>What is a boid?</h3>
               <p>A boid simulation simulates "flocking", for example, how birds fly together or fish swim in schools.</p>
             </div>
             <div class="credit">
-                <div class="inner">
-                  <p>By Neil Patil.</p>
-                </div>
+              <div class="inner">
+                <p>By Neil Patil.</p>
               </div>
+            </div>
           </div>
           <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
