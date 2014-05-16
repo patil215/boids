@@ -19,6 +19,7 @@ var turnLikeOthersImportance = 0.008;
 var PI = 3.1415;
 
 
+
 function initializeBoids() {
     for (var i = 0; i < numBoids; i++) {
         var boid = new Object();
@@ -149,7 +150,15 @@ function drawBoids() {
 
 }
 
+$
+
 initializeBoids();
+
+$(document).ready(function(){
+    console.log("ready");
+    $("#numboids-control").val(numBoids);
+    $("#boidsize-control").val(boidSize);
+});
 
 function main() {
     moveBoids();
@@ -158,3 +167,4 @@ function main() {
 };
 
 requestAnimationFrame(main);
+

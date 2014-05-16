@@ -1,22 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>A simple boid simulation</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" type="text/css" >
-    <link rel="stylesheet" href="css/slider.css" media="screen" type="text/css">
-      <link rel="stylesheet" href="css/styling.css" media="screen" type="text/css" >
-      </head>
-      <body>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        
-        <script src="js/bootstrap.min.js"></script>
-      </body>
-    </html>
     <!DOCTYPE html>
     <html lang="en">
       <head>
@@ -26,7 +7,6 @@
         <title>A Simple Boid Simulation</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/slider.css" rel="stylesheet" >
           <link href="css/styling.css" rel="stylesheet">
           <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
           <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,11 +28,11 @@
               <h2>Controls</h2>
               <div class="control-container">
                 <h5>Number of boids</h5>
-                <input class="textbox-control" id="numboids-control">
+                <input type="number" class="textbox-control" id="numboids-control">
               </div>
               <div class="control-container">
                 <h5>Boid size</h5>
-                <input class="textbox-control" id="boidsize-control">
+                <input type="number" class="textbox-control" id="boidsize-control">
               </div>
             </div>
             <div class="boid-info-container">
@@ -69,7 +49,6 @@
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
           <!-- Include all compiled plugins (below), or include individual files as needed -->
           <script src="js/bootstrap.min.js"></script>
-          <script src="js/bootstrap-slider.js"></script>
           <script src="js/boid.js"></script>
           
         </body>
