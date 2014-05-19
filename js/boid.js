@@ -12,7 +12,23 @@ var wallTurnAmount = .01;
 var wallTurnDistance = 100;
 var moveToOthersImportance = 0.008;
 var turnLikeOthersImportance = 0.008;
+var moveToMouseImportance = 0;
 var PI = 3.1415;
+
+var mouseX = (canvas.width / 2) - canvas.offsetLeft;
+var mouseY = (canvas.height / 2) - canvas.offsetTop;
+
+canvas.addEventListener("mousemove", getPosition, false);
+
+function getPosition(event) {
+    var x = event.x;
+    var y = event.y;
+    x -= canvas.offsetLeft;
+    y -= canvas.offsetTop;
+    mouseX = x;
+    mouseY = y;
+}
+
 
 function initializeBoids() {
     for (var i = 0; i < numBoids; i++) {
@@ -96,6 +112,18 @@ function keepFromOthers(boid, boids) {
     boid.g = Math.round(scale);
 }
 
+function turnToMouse() {
+    var difX = mouseX - boid.x;
+    var difY = mouseY - boid.y;
+    var rotation = Math.atan(difY / difX);
+    if (difY < 0 && difX < 0) {
+        rotation += PI;
+    } else if (difX < 0 && difY > 0) {
+        rotation += PI;
+    }
+    boid.rotation += ((rotation - boid.rotation) * moveToMouseImportance);
+}
+
 function moveBoids() {
     // create a copy so the moving boids don't mess stuff up
     var copyBoids = allBoids.slice(0);
@@ -104,6 +132,7 @@ function moveBoids() {
         turnLikeOthers(boid, copyBoids);
         moveToOthers(boid, copyBoids);
         keepFromOthers(boid, copyBoids);
+        turnToMouse(boid);
         var yMove = Math.sin(boid.rotation) * boid.speed;
         var xMove = Math.cos(boid.rotation) * boid.speed;
         boid.x += xMove;
@@ -152,9 +181,10 @@ $("#controls-submit").click(function() {
     var newKeepAwayRotation = $("#otherboidturn-control").val();
     var newTurnLikeOthersImportance = $("#sameboidturn-control").val();
     var newMoveToOthersImportance = $("#boidcentermass-control").val();
+    var newMoveToMouseImportance = $("#boidmouse-control").val();
     
     if (isNumber(newNumBoids) && isNumber(newBoidSize) && isNumber(newBoidSpeed) && isNumber(newDistanceKeepAway) && isNumber(newKeepAwayRotation) &&
-        isNumber(newTurnLikeOthersImportance) && isNumber(newMoveToOthersImportance)) {
+        isNumber(newTurnLikeOthersImportance) && isNumber(newMoveToOthersImportance) && isNumber(newMoveToMouseImportance)) {
         numBoids = newNumBoids;
         boidSize = newBoidSize;
         boidSpeed = newBoidSpeed;
@@ -162,6 +192,7 @@ $("#controls-submit").click(function() {
         keepAwayRotation = newKeepAwayRotation;
         turnLikeOthersImportance = newTurnLikeOthersImportance;
         moveToOthersImportance = newMoveToOthersImportance;
+        moveToMouseImportance = newMoveToMouseImportance;
         allBoids = [];
         initializeBoids();
     } else {
@@ -177,6 +208,7 @@ $(document).ready(function() {
     $("#otherboidturn-control").val(keepAwayRotation);
     $("#sameboidturn-control").val(turnLikeOthersImportance);
     $("#boidcentermass-control").val(moveToOthersImportance);
+    $("#boidmouse-control").val(moveToMouseImportance);
      
 });
 
