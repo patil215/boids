@@ -21,13 +21,24 @@
 
 .site-wrapper {
   display: table;
-  width: 100%;
+  /*width: 1332px;*/
+  width: 1350px;
   height: 100%; /* For at least Firefox */
   min-height: 100%;
 }
 
 .textbox-control {
 	border-radius:3px;
+}
+
+.controls-container {
+	width: 500px;
+	padding-right:16px;
+	float:right;
+}
+
+.boid-canvas-container {
+	display: inline;
 }
 
 .btn {
