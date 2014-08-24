@@ -1,28 +1,19 @@
-.boid-title-container {
-	text-align:center;
-	padding-top:24px;
-	padding-bottom:12px;
+html {
+	width:100%;
+	height:100%;
+	background-color: #0B3B39;
 }
 
-.boid-title {
-	font-size:32px;
+body {
+	background-color: #0B3B39;
 }
 
-.boid-canvas-container {
-	text-align: center;
-	float:left;
-	padding:16px;
+p, h1, h2, h3, h4, h5 {
+	color: white;
 }
-
-.boid-info-container {
-	padding-top:32px;
-	padding-left:32px;
-}
-
 
 .site-wrapper {
   display: table;
-  /*width: 1332px;*/
   width: 1350px;
   height: 100%; /* For at least Firefox */
   min-height: 100%;
@@ -31,46 +22,6 @@
 }
 
 .textbox-control {
-	border-radius:3px;
-}
-
-.controls-container {
-	width: 500px;
-	padding-right:16px;
-	float:right;
-}
-
-html {
-	width:100%;
-	height:100%;
-	box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-}
-
-body {
-	background-color: #0B3B39;
-}
-
-.textbox-control {
 	color:white;
 	background-color: #0B3B39;
-}
-
-p, h1, h2, h5, h3 {
-	color: white;
-}
-
-.boid-canvas-container {
-	display: inline;
-}
-
-.btn {
-	margin:12px;
-}
-
-.credit {
-	text-align: center;
-}
-
-.inner {
-	padding:30px;
 }
