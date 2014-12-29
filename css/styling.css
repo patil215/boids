@@ -12,15 +12,6 @@ p, h1, h2, h3, h4, h5 {
 	color: white;
 }
 
-.site-wrapper {
-  display: table;
-  width: 1350px;
-  height: 100%; /* For at least Firefox */
-  min-height: 100%;
-  margin-left: auto;
-  margin-right:auto;
-}
-
 .textbox-control {
 	color:white;
 	background-color: #0B3B39;
